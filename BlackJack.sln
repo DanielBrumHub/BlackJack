@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.Api", "blackjack.api\BlackJack.Api.csproj", "{1A46EC20-ED89-485A-98BE-1C59C4EC79DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.Aplicacao", "blackjack.aplicacao\BlackJack.Aplicacao.csproj", "{6DCB874B-D6A1-4D20-938E-1EDD96F6DAB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.Infra", "blackjack.infra\BlackJack.Infra.csproj", "{596C2041-5B02-429F-B8CA-CAFD2CE8EB7A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.Dominio", "blackjack.dominio\BlackJack.Dominio.csproj", "{8F3B4F3F-D74F-41B2-BD61-F25B843FA863}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.DataTransfer", "blackjack.datatransfer\BlackJack.DataTransfer.csproj", "{C09FB248-7E37-4C2A-97E0-F70004328B73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{492D7C40-82DC-4E98-B988-A4810ABFBA72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A46EC20-ED89-485A-98BE-1C59C4EC79DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A46EC20-ED89-485A-98BE-1C59C4EC79DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A46EC20-ED89-485A-98BE-1C59C4EC79DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A46EC20-ED89-485A-98BE-1C59C4EC79DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DCB874B-D6A1-4D20-938E-1EDD96F6DAB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DCB874B-D6A1-4D20-938E-1EDD96F6DAB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DCB874B-D6A1-4D20-938E-1EDD96F6DAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DCB874B-D6A1-4D20-938E-1EDD96F6DAB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{596C2041-5B02-429F-B8CA-CAFD2CE8EB7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596C2041-5B02-429F-B8CA-CAFD2CE8EB7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596C2041-5B02-429F-B8CA-CAFD2CE8EB7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{596C2041-5B02-429F-B8CA-CAFD2CE8EB7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3B4F3F-D74F-41B2-BD61-F25B843FA863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3B4F3F-D74F-41B2-BD61-F25B843FA863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3B4F3F-D74F-41B2-BD61-F25B843FA863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3B4F3F-D74F-41B2-BD61-F25B843FA863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C09FB248-7E37-4C2A-97E0-F70004328B73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C09FB248-7E37-4C2A-97E0-F70004328B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C09FB248-7E37-4C2A-97E0-F70004328B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C09FB248-7E37-4C2A-97E0-F70004328B73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1A46EC20-ED89-485A-98BE-1C59C4EC79DC} = {492D7C40-82DC-4E98-B988-A4810ABFBA72}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D14F911-9E8B-48D7-9A27-0DCE82AEF155}
+	EndGlobalSection
+EndGlobal
