@@ -126,9 +126,8 @@ namespace BlackJack.Dominio.Jogos.Servicos
 
             return new(VerificarEsconderCartaDealer(queryDealer.ToList()),
                         queryJogador.ToList(),
-                        queryDealer.Sum(x => x.Valor),
-                        queryJogador.Sum(x => x.Valor),
-                        RecuperarTextoResultado(ganhou, perdeu));
+                        RecuperarTextoResultado(ganhou, perdeu),
+                        idJogo);
         }
 
         public static string RecuperarTextoResultado(bool ganhou, bool perdeu)

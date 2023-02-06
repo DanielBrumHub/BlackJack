@@ -21,13 +21,12 @@ namespace BlackJack.Testes.Jogos.Entidades
             {
                 IList<Carta> cartas = Builder<Carta>.CreateListOfSize(5).Build();
 
-                Jogo jogo = new(cartas, cartas, 20, 30, "Resultado");
+                Jogo jogo = new(cartas, cartas, "Resultado", 30);
 
                 jogo.CartasDealer.Should().BeEquivalentTo(cartas);
                 jogo.CartasJogador.Should().BeEquivalentTo(cartas);
-                jogo.PontuacaoDealer.Should().Be(20);
-                jogo.PontuacaoJogador.Should().Be(30);
                 jogo.Resultado.Should().Be("Resultado");
+                jogo.IdJogo.Should().Be(30);
             }
         }
     }
