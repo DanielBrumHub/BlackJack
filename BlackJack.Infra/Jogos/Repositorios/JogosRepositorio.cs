@@ -9,12 +9,10 @@ namespace BlackJack.Infra.Jogos.Repositorios
 {
     public class JogosRepositorio : IJogosRepositorio
     {
-        private readonly IConexaoBanco ConexaoBanco;
         private readonly SqlConnection Con;
 
-        public JogosRepositorio(IConexaoBanco conexaoBanco, SqlConnection connection)
+        public JogosRepositorio(IConexaoBanco conexaoBanco)
         {
-            this.ConexaoBanco = conexaoBanco;
             Con = new SqlConnection(conexaoBanco.GetConnection());
         }
 
