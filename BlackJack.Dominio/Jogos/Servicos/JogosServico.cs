@@ -3,6 +3,7 @@ using BlackJack.Dominio.Jogos.Enumeradores;
 using BlackJack.Dominio.Jogos.Repositorios;
 using BlackJack.Dominio.Jogos.Servicos.Interfaces;
 using BlackJack.Infra.Jogos.Repositorios.Consultas;
+using NPOI.Util;
 using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace BlackJack.Dominio.Jogos.Servicos
@@ -30,10 +31,12 @@ namespace BlackJack.Dominio.Jogos.Servicos
 
             cartasDealer = VerificarEsconderCartaDealer(cartasDealer);
 
+            ResultadoEnum resultado = VerificarResultado(jogadas);
+
             return new (cartasDealer, cartasJogador, 
                         RecuperarCartas(jogadas, true).Sum(x => x.Valor), 
                         RecuperarCartas(jogadas, false).Sum(x => x.Valor),
-                        VerificarResultado(jogadas));
+                        RecuperarTextoResultado(resultado));
         }
 
         public Jogo ContinuarJogo(int idJogo)
@@ -50,11 +53,13 @@ namespace BlackJack.Dominio.Jogos.Servicos
             queryDealer = RecuperarCartas(jogadas, true);
             queryJogador = RecuperarCartas(jogadas, false);
 
+            ResultadoEnum resultado = VerificarResultado(jogadas);
+
             return new (VerificarEsconderCartaDealer(queryDealer.ToList()),
                         queryJogador.ToList(),
                         queryDealer.Sum(x => x.Valor),
                         queryJogador.Sum(x => x.Valor),
-                        VerificarResultado(jogadas));
+                        RecuperarTextoResultado(resultado));
         }
 
         public Jogo FinalizarJogo(int idJogo)
@@ -120,11 +125,14 @@ namespace BlackJack.Dominio.Jogos.Servicos
         private static string RecuperarTextoResultado(ResultadoEnum resultado) 
         {
             string[] textoResultado = { "Você Ganhou!", "Você Perdeu!", "Você pode parar ou continuar!" };
-            switch (resultado.)
+            switch (resultado)
             {
-                case: 'G';
+                case ResultadoEnum.Ganhou:
                     return textoResultado[0];
+                case ResultadoEnum.Perdeu:
+                    return textoResultado[1];
                 default:
+                    return textoResultado[2];
             }
         } 
 
