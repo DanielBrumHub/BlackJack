@@ -21,7 +21,7 @@ namespace BlackJack.Infra.Jogos.Repositorios
             int idJogo;
             Con.Open();
             var query = @"INSERT INTO tbl_jogos (Descricao) VALUES (@NOMEJOGADOR);
-                          SELECT Id FROM tbl_jogos j WHERE j.Descricao = @NOMEJOGADOR;";
+                          SELECT MAX(Id) FROM tbl_jogos j WHERE j.Descricao = @NOMEJOGADOR;";
 
             var parametros = new DynamicParameters();
             parametros.Add("@NOMEJOGADOR", nomeJogador);
@@ -50,9 +50,9 @@ namespace BlackJack.Infra.Jogos.Repositorios
         public void EncerrarJogo(int idJogo)
         {
             Con.Open();
-            var query = @"UPDATE tbl_jogos j
-                          SET j.Encerrado = 1
-                          WHERE j.Id = @IDJOGO;";
+            var query = @"UPDATE tbl_jogos 
+                          SET IdtEncerrado = 1
+                          WHERE Id = @IDJOGO;";
 
             var parametros = new DynamicParameters();
             parametros.Add("@IDJOGO", idJogo);
@@ -65,8 +65,12 @@ namespace BlackJack.Infra.Jogos.Repositorios
         {
             Con.Open();
             IList<JogadasConsulta> jogadas;
-            var query = @"SELECT j.*, 
-                                 jo.Encerrado
+            var query = @"SELECT j.Id,
+	                             j.IdCarta,
+	                             j.IdNipe,
+	                             j.IdJogo,
+	                             j.IdtDealer, 
+                                 jo.IdtEncerrado AS Encerrado,
 	                             c.Descricao AS DescricaoCarta,
 	                             c.Valor AS ValorCarta,
 	                             n.Descricao AS DescricaoNipe 

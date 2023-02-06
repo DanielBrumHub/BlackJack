@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Jogos\Entidades\Baralho.cs" />
+    <Compile Remove="Jogos\Enumeradores\ResultadoEnum.cs" />
     <Compile Remove="Jogos\Repositorios\INipesRepositorio.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NPOI" Version="2.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Jogos\Enumeradores\" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,7 @@
 ﻿using BlackJack.Dominio.Jogos.Entidades;
-using BlackJack.Dominio.Jogos.Enumeradores;
 using BlackJack.Dominio.Jogos.Repositorios;
 using BlackJack.Dominio.Jogos.Servicos.Interfaces;
 using BlackJack.Infra.Jogos.Repositorios.Consultas;
-using NPOI.SS.Formula.Functions;
 
 namespace BlackJack.Dominio.Jogos.Servicos
 {
@@ -21,6 +19,9 @@ namespace BlackJack.Dominio.Jogos.Servicos
 
         public Jogo IniciarJogo(string nomeJogador)
         {
+            if (String.IsNullOrEmpty(nomeJogador))
+                throw new Exception("Nome do jogador é obrigatório!");
+
             int idJogo = jogosRepositorio.Inserir(nomeJogador);
 
             DistribuirCartasRodada(2, idJogo, true);
@@ -28,7 +29,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
 
             IList<JogadasConsulta> jogadas = jogosRepositorio.RecuperarJogadas(idJogo);
 
-            return VerificarResultado(jogadas);
+            return VerificarResultado(jogadas, idJogo, true);
         }
 
         public Jogo ContinuarJogo(int idJogo, bool continua)
@@ -37,7 +38,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
 
             bool jogoEncerrado = jogadas.Any(x => x.Encerrado);
             if (jogoEncerrado)
-                return new(null, null, 0, 0, "Esse jogo já acabou!");
+                throw new Exception("Jogo encerrado!");
 
             if (continua)
                 DistribuirCartasRodada(1, idJogo, false);
@@ -45,12 +46,11 @@ namespace BlackJack.Dominio.Jogos.Servicos
                 FinalizarJogo(idJogo, jogadas);
 
             jogadas = jogosRepositorio.RecuperarJogadas(idJogo);
-
-            return VerificarResultado(jogadas);
+            return VerificarResultado(jogadas, idJogo, continua);
         }
-        private void FinalizarJogo(int idJogo, IList<JogadasConsulta> jogadas) 
+
+        public void FinalizarJogo(int idJogo, IList<JogadasConsulta> jogadas)
         {
-            jogosRepositorio.EncerrarJogo(idJogo);
             int pontuacaoDealer = RecuperarCartas(jogadas, true).Sum(x => x.Valor);
             int quantidadeDealer = RecuperarCartas(jogadas, true).Count();
 
@@ -59,6 +59,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
             {
                 DistribuirCartasRodada(1, idJogo, true);
 
+                jogadas = jogosRepositorio.RecuperarJogadas(idJogo);
                 pontuacaoDealer = RecuperarCartas(jogadas, true).Sum(x => x.Valor);
                 quantidadeDealer = RecuperarCartas(jogadas, true).Count();
                 limiteDealer = pontuacaoDealer < 17 && quantidadeDealer < 5;
@@ -75,7 +76,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
             return cartas;
         }
 
-        private IList<Carta> AtribuirCartasPersonagem(int idJogo, int quantidade)
+        public IList<Carta> AtribuirCartasPersonagem(int idJogo, int quantidade)
         {
             IList<Carta> cartas = new List<Carta> { };
 
@@ -93,7 +94,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
             return cartas;
         }
 
-        private void GravarJogada(IList<Carta> cartas, int idJogo, bool dealer)
+        public void GravarJogada(IList<Carta> cartas, int idJogo, bool dealer)
         {
             foreach (Carta carta in cartas)
             {
@@ -101,7 +102,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
             }
         }
 
-        private static IList<Carta> VerificarEsconderCartaDealer(IList<Carta> cartasDealer)
+        public static IList<Carta> VerificarEsconderCartaDealer(IList<Carta> cartasDealer)
         {
             bool primeiraRodada = cartasDealer.Count == 2;
             bool dealerTemAsOu10 = !cartasDealer.Any(x => x.Valor is 10 or 11);
@@ -112,31 +113,38 @@ namespace BlackJack.Dominio.Jogos.Servicos
             return cartasDealer;
         }
 
-        private static Jogo VerificarResultado(IList<JogadasConsulta> jogadas)
+        public Jogo VerificarResultado(IList<JogadasConsulta> jogadas, int idJogo, bool continua)
         {
             IQueryable<Carta> queryDealer = RecuperarCartas(jogadas, true);
             IQueryable<Carta> queryJogador = RecuperarCartas(jogadas, false);
+
+            bool ganhou = VerificarGanhou(jogadas, continua);
+            bool perdeu = VerificarPerdeu(jogadas, continua);
+
+            if(ganhou || perdeu)
+                jogosRepositorio.EncerrarJogo(idJogo);
 
             return new(VerificarEsconderCartaDealer(queryDealer.ToList()),
                         queryJogador.ToList(),
                         queryDealer.Sum(x => x.Valor),
                         queryJogador.Sum(x => x.Valor),
-                        RecuperarTextoResultado(jogadas));
+                        RecuperarTextoResultado(ganhou, perdeu));
         }
 
-        private static string RecuperarTextoResultado(IList<JogadasConsulta> jogadas)
+        public static string RecuperarTextoResultado(bool ganhou, bool perdeu)
         {
             string[] textoResultado = { "Você Ganhou!", "Você Perdeu!", "Você pode parar ou continuar!" };
-            if (VerificarGanhou(jogadas))
+
+            if (ganhou)
                 return textoResultado[0];
 
-            if (VerificarPerdeu(jogadas))
+            if (perdeu) 
                 return textoResultado[1];
 
             return textoResultado[2];
         }
 
-        private static bool VerificarGanhou(IList<JogadasConsulta> jogadas)
+        public static bool VerificarGanhou(IList<JogadasConsulta> jogadas, bool continua)
         {
             int pontuacaoDealer = RecuperarCartas(jogadas, true).Sum(x => x.Valor);
             int pontuacaoJogador = RecuperarCartas(jogadas, false).Sum(x => x.Valor);
@@ -150,25 +158,34 @@ namespace BlackJack.Dominio.Jogos.Servicos
 
             bool jogadorMaisPertoDe21DealerEsgotado = (pontuacaoJogador < 21 &&
                                                        (quantidadeDealer >= 5 || pontuacaoDealer >= 17) &&
-                                                       pontuacaoJogador > pontuacaoDealer);
+                                                       pontuacaoJogador > pontuacaoDealer &&
+                                                       pontuacaoDealer < 21 &&
+                                                       !continua);
 
             return dealerExcedeu21Pontos || jogadorCom21DealerNao || jogadorMaisPertoDe21DealerEsgotado;
         }
 
-        private static bool VerificarPerdeu(IList<JogadasConsulta> jogadas)
+        public static bool VerificarPerdeu(IList<JogadasConsulta> jogadas, bool continua)
         {
             int pontuacaoDealer = RecuperarCartas(jogadas, true).Sum(x => x.Valor);
             int pontuacaoJogador = RecuperarCartas(jogadas, false).Sum(x => x.Valor);
+            int quantidadeDealer = RecuperarCartas(jogadas, true).Count();
 
             bool dealerCom21JogadorNao = (pontuacaoDealer == 21 &&
                                           pontuacaoJogador != 21);
 
             bool jogadorPassouDe21 = (pontuacaoJogador > 21);
 
-            return dealerCom21JogadorNao || jogadorPassouDe21;
+            bool dealerMaisPertoDe21FimJogo = (pontuacaoJogador < 21 &&
+                                              (quantidadeDealer >= 5 || pontuacaoDealer >= 17) &&
+                                              pontuacaoJogador < pontuacaoDealer &&
+                                              pontuacaoDealer < 21 &&
+                                              !continua);
+
+            return dealerCom21JogadorNao || jogadorPassouDe21 || dealerMaisPertoDe21FimJogo;
         }
 
-        private static IQueryable<Carta> RecuperarCartas(IList<JogadasConsulta> jogadas, bool dealer)
+        public static IQueryable<Carta> RecuperarCartas(IList<JogadasConsulta> jogadas, bool dealer)
         {
             IQueryable<JogadasConsulta> query = jogadas.Where(x => x.IdtDealer == dealer).AsQueryable();
 
@@ -178,7 +195,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
             return carta;
         }
 
-        private static IList<Carta> VerificarValorAs(IList<Carta> cartas)
+        public static IList<Carta> VerificarValorAs(IList<Carta> cartas)
         {
             bool primeiraRodada = cartas.Count == 2;
             bool existeAs = cartas.Any(x => x.Id == 1);

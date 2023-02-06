@@ -42,7 +42,8 @@ INSERT INTO tbl_nipes (Descricao) VALUES ('Paus'),
 
 CREATE TABLE tbl_jogos (
     Id int identity(1,1) primary key,
-    Descricao varchar(20)
+    Descricao varchar(20),
+	IdtEncerrado int
 );
 
 CREATE TABLE tbl_jogadas (
@@ -50,21 +51,7 @@ CREATE TABLE tbl_jogadas (
 	IdtDealer int,
 	IdCarta int,
 	IdNipe int,
-    IdJogo int,
-	FOREIGN KEY (IdCarta) REFERENCES tbl_cartas(Id),
-	FOREIGN KEY (IdNipe) REFERENCES tbl_nipes(Id),
-	FOREIGN KEY (IdJogo) REFERENCES tbl_jogos(Id)
+    IdJogo int
 );
-
-
-SELECT j.*, 
-	   c.Descricao AS DescricaoCarta,
-	   c.Valor AS ValorCarta,
-	   n.Descricao AS DescricaoNipe 
-FROM tbl_jogadas j
-INNER JOIN tbl_cartas c ON c.Id = j.IdCarta
-INNER JOIN tbl_nipes n ON n.Id = j.IdNipe
-WHERE j.IdJogo = 1
-
 
 
