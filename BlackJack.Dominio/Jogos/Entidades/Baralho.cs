@@ -19,7 +19,8 @@
 
         public virtual void SetCartas(IList<Carta> cartas)
         {
-            Cartas = cartas;
+            if (cartas.Any())
+                Cartas = cartas;
         }
     }
 }

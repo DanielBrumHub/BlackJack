@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.DataTransfer", "b
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{492D7C40-82DC-4E98-B988-A4810ABFBA72}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{6835FA99-B41F-4CD1-B62A-CB3F6FF7E48A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.Testes", "BlackJack.Testes\BlackJack.Testes.csproj", "{4F8EAFAE-8EE5-4C3D-B8EB-142E41DD9708}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +45,17 @@ Global
 		{C09FB248-7E37-4C2A-97E0-F70004328B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C09FB248-7E37-4C2A-97E0-F70004328B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C09FB248-7E37-4C2A-97E0-F70004328B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8EAFAE-8EE5-4C3D-B8EB-142E41DD9708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8EAFAE-8EE5-4C3D-B8EB-142E41DD9708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8EAFAE-8EE5-4C3D-B8EB-142E41DD9708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8EAFAE-8EE5-4C3D-B8EB-142E41DD9708}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1A46EC20-ED89-485A-98BE-1C59C4EC79DC} = {492D7C40-82DC-4E98-B988-A4810ABFBA72}
+		{4F8EAFAE-8EE5-4C3D-B8EB-142E41DD9708} = {6835FA99-B41F-4CD1-B62A-CB3F6FF7E48A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D14F911-9E8B-48D7-9A27-0DCE82AEF155}
