@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BlackJack.Aplicacao.Jogos.Servicos.Interfaces;
-using BlackJack.DataTransfer.Jogos.Requests;
 using BlackJack.DataTransfer.Jogos.Responses;
 using BlackJack.Dominio.Jogos.Entidades;
 using BlackJack.Dominio.Jogos.Servicos.Interfaces;
@@ -13,7 +12,7 @@ namespace BlackJack.Aplicacao.Jogos.Servicos
         private readonly IJogosServico jogosServico;
 
         public JogosAppServico(IMapper mapper,
-                               IJogosServico jogosServico) 
+                               IJogosServico jogosServico)
         {
             this.mapper = mapper;
             this.jogosServico = jogosServico;
@@ -33,11 +32,11 @@ namespace BlackJack.Aplicacao.Jogos.Servicos
             }
         }
 
-        public JogoResponse ContinuarJogo(int idJogo) 
+        public JogoResponse ContinuarJogo(int idJogo, bool continua)
         {
             try
             {
-                Jogo jogo = jogosServico.ContinuarJogo(idJogo);
+                Jogo jogo = jogosServico.ContinuarJogo(idJogo, continua);
 
                 return mapper.Map<JogoResponse>(jogo);
             }

@@ -7,6 +7,7 @@ namespace BlackJack.Dominio.Jogos.Repositorios
     {
         int Inserir(string nomeJogador);
         void InserirJogada(Carta carta, int idJogo, bool dealer);
+        void EncerrarJogo(int idJogo);
         IList<JogadasConsulta> RecuperarJogadas(int idJogo);
     }
 }

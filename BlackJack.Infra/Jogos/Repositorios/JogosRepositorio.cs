@@ -47,15 +47,31 @@ namespace BlackJack.Infra.Jogos.Repositorios
             Con.Close();
         }
 
+        public void EncerrarJogo(int idJogo)
+        {
+            Con.Open();
+            var query = @"UPDATE tbl_jogos j
+                          SET j.Encerrado = 1
+                          WHERE j.Id = @IDJOGO;";
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@IDJOGO", idJogo);
+
+            Con.Execute(query, parametros);
+            Con.Close();
+        }
+
         public IList<JogadasConsulta> RecuperarJogadas(int idJogo)
         {
             Con.Open();
             IList<JogadasConsulta> jogadas;
             var query = @"SELECT j.*, 
+                                 jo.Encerrado
 	                             c.Descricao AS DescricaoCarta,
 	                             c.Valor AS ValorCarta,
 	                             n.Descricao AS DescricaoNipe 
                             FROM tbl_jogadas j
+                            INNER JOIN tbl_jogos jo ON jo.Id = j.IdJogo
                             INNER JOIN tbl_cartas c ON c.Id = j.IdCarta
                             INNER JOIN tbl_nipes n ON n.Id = j.IdNipe
                             WHERE j.IdJogo = @IDJOGO;";

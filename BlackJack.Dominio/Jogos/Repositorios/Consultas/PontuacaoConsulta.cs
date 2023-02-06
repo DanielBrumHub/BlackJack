@@ -10,5 +10,6 @@ namespace BlackJack.Infra.Jogos.Repositorios.Consultas
         public int IdNipe { get; set; }
         public string DescricaoNipe { get; set; }
         public bool IdtDealer { get; set; }
+        public bool Encerrado { get; set; }
     }
 }

@@ -3,5 +3,6 @@
     public class ContinuarJogoRequest
     {
         public int IdJogo { get; set; }
+        public bool Continua { get; set; }
     }
 }
