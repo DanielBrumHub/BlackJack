@@ -17,24 +17,27 @@ namespace BlackJack.Infra.Jogos.Repositorios
         public IList<Carta> RecuperarDisponiveis(int idJogo)
         {
             IList<Carta> cartas;
-            using (var con = new SqlConnection(conexaoBanco.GetConnection()))
-            {
-                con.Open();
-                var query = @"SELECT c.Descricao, n.Descricao AS Nipe, c.Id, c.Valor 
+            using var con = new SqlConnection(conexaoBanco.GetConnection());
+            con.Open();
+            var query = @"SELECT c.Id, c.Valor, c.Descricao, 
+                                     c.Id AS IdCarta, n.Id, n.Descricao
                             FROM tbl_cartas c 
                             LEFT JOIN tbl_nipes n ON NOT EXISTS (SELECT 1 FROM tbl_jogadas j
 										                            WHERE j.IdJogo = @IDJOGO
 										                            AND   j.IdNipe = n.Id
 										                            AND   j.IdCarta = c.Id);";
 
-                var parametros = new DynamicParameters();
-                parametros.Add("@IDJOGO", idJogo);
+            var parametros = new DynamicParameters();
+            parametros.Add("@IDJOGO", idJogo);
 
-                cartas = con.Query<Carta>(query, parametros).ToList();
-                con.Close();
+            cartas = con.Query<Carta, Nipe, Carta>(query, (carta, nipe) =>
+            {
+                carta.SetNipe(nipe);
+                return carta;
+            }, parametros, splitOn: "IdCarta").ToList();
+            con.Close();
 
-                return cartas;
-            }
+            return cartas;
         }
     }
 }

@@ -7,12 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Jogos\Entidades\Nipe.cs" />
     <Compile Remove="Jogos\Repositorios\INipesRepositorio.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Jogos\Enumeradores\" />
   </ItemGroup>
 
   <ItemGroup>

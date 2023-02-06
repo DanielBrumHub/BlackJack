@@ -21,20 +21,34 @@ namespace BlackJack.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Route("iniciar")]
         public JogoResponse IniciarJogo(IniciarJogoRequest request)
         {
             return jogosAppServico.IniciarJogo(request.NomeJogador);
         }
 
         /// <summary>
-        /// Segue para a próxima jogada
+        /// Pede nova carta
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPut]
-        public JogoResponse SeguirRodadaJogo([FromBody] ContinuarJogoRequest request)
+        [HttpPost]
+        [Route("continuar")]
+        public JogoResponse ContinuarJogo([FromBody] ContinuarJogoRequest request)
         {
-            return jogosAppServico.SeguirRodadaJogo(request.IdJogo);
+            return jogosAppServico.ContinuarJogo(request.IdJogo);
+        }
+
+        /// <summary>
+        /// Finaliza o Jogo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("parar")]
+        public JogoResponse FinalizarJogo([FromBody] ContinuarJogoRequest request)
+        {
+            return jogosAppServico.ContinuarJogo(request.IdJogo);
         }
 
     }

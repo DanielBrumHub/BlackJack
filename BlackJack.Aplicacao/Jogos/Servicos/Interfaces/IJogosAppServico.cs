@@ -6,6 +6,6 @@ namespace BlackJack.Aplicacao.Jogos.Servicos.Interfaces
     public interface IJogosAppServico
     {
         JogoResponse IniciarJogo(string nomeJogador);
-        JogoResponse SeguirRodadaJogo(int request);
+        JogoResponse ContinuarJogo(int request);
     }
 }

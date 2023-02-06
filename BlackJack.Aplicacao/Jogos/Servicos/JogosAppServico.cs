@@ -33,13 +33,13 @@ namespace BlackJack.Aplicacao.Jogos.Servicos
             }
         }
 
-        public JogoResponse SeguirRodadaJogo(int idJogo) 
+        public JogoResponse ContinuarJogo(int idJogo) 
         {
             try
             {
-                jogosServico.SeguirRodadaJogo(idJogo);
+                Jogo jogo = jogosServico.ContinuarJogo(idJogo);
 
-                return new JogoResponse { };
+                return mapper.Map<JogoResponse>(jogo);
             }
             catch (Exception)
             {

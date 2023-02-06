@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BlackJack.DataTransfer.Jogos.Requests;
 using BlackJack.DataTransfer.Jogos.Responses;
 using BlackJack.Dominio.Jogos.Entidades;
 
@@ -11,6 +10,7 @@ namespace BlackJack.Aplicacao.Jogos.Profiles
         {
             CreateMap<Jogo, JogoResponse>();
             CreateMap<Carta, CartaResponse>();
+            CreateMap<Nipe, NipeResponse>();
         }
     }
 }

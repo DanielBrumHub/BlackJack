@@ -5,14 +5,15 @@
         public virtual int Id { get; protected set; }
         public virtual string Descricao { get; protected set; }
 
-        protected Nipe() { }
 
-        public Nipe(string descricao)
+        private Nipe() { }
+
+        public Nipe(string descricao) 
         {
             SetDescricao(descricao);
         }
 
-        public virtual void SetDescricao(string descricao)
+        public void SetDescricao(string descricao) 
         {
             Descricao = descricao;
         }
