@@ -19,19 +19,25 @@ namespace BlackJack.Api.Controllers
         /// <summary>
         /// Inicia Jogo
         /// </summary>
-        /// <returns></returns>
+        /// <response code="201">Sucesso</response>
+        /// <response code="400">Falha</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public JogoResponse IniciarJogo(IniciarJogoRequest request)
         {
             return jogosAppServico.IniciarJogo(request.NomeJogador);
         }
 
         /// <summary>
-        /// Pede nova carta
+        /// Continua ou Finaliza o jogo
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <response code="201">Sucesso</response>
+        /// <response code="400">Falha</response>
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public JogoResponse ContinuarJogo([FromBody] ContinuarJogoRequest request)
         {
             return jogosAppServico.ContinuarJogo(request.IdJogo, request.Continua);
