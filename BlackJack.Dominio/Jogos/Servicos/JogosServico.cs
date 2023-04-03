@@ -102,12 +102,11 @@ namespace BlackJack.Dominio.Jogos.Servicos
             }
         }
 
-        public static IList<Carta> VerificarEsconderCartaDealer(IList<Carta> cartasDealer)
+        public static IList<Carta> VerificarEsconderCartaDealer(IList<Carta> cartasDealer, bool jogoEncerrado)
         {
-            bool primeiraRodada = cartasDealer.Count == 2;
-            bool dealerTemAsOu10 = !cartasDealer.Any(x => x.Valor is 10 or 11);
+            bool dealerTemAsOu10 = cartasDealer.Any(x => x.Valor is 10 or 11);
 
-            if (primeiraRodada && dealerTemAsOu10)
+            if (!dealerTemAsOu10 && !jogoEncerrado)
                 cartasDealer[0] = new Carta("Escondida", new Nipe("Escondido"), 0);
 
             return cartasDealer;
@@ -124,7 +123,7 @@ namespace BlackJack.Dominio.Jogos.Servicos
             if(ganhou || perdeu)
                 jogosRepositorio.EncerrarJogo(idJogo);
 
-            return new(VerificarEsconderCartaDealer(queryDealer.ToList()),
+            return new(VerificarEsconderCartaDealer(queryDealer.ToList(), ganhou || perdeu),
                         queryJogador.ToList(),
                         RecuperarTextoResultado(ganhou, perdeu),
                         idJogo);

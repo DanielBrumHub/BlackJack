@@ -20,30 +20,16 @@ namespace BlackJack.Aplicacao.Jogos.Servicos
 
         public JogoResponse IniciarJogo(string nomeJogador)
         {
-            try
-            {
-                Jogo jogo = jogosServico.IniciarJogo(nomeJogador);
+            Jogo jogo = jogosServico.IniciarJogo(nomeJogador);
 
-                return mapper.Map<JogoResponse>(jogo);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return mapper.Map<JogoResponse>(jogo);
         }
 
         public JogoResponse ContinuarJogo(int idJogo, bool continua)
         {
-            try
-            {
-                Jogo jogo = jogosServico.ContinuarJogo(idJogo, continua);
+            Jogo jogo = jogosServico.ContinuarJogo(idJogo, continua);
 
-                return mapper.Map<JogoResponse>(jogo);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return mapper.Map<JogoResponse>(jogo);
         }
     }
 }
