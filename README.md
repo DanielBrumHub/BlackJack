@@ -41,8 +41,6 @@ Para rodar localmente é necessário ter instalado:
 Os scripts de criação do ambiente estão na pasta `blackjack\Scripts`
 ## Testes unitários
 
-Os testes unitários se encontram incompletos nessa branch e serão adicionados posteriormente.
-
 Realizados com o proprio **XUnit**, em um projeto a parte na solution.
 
 
@@ -52,5 +50,4 @@ Realizados com o proprio **XUnit**, em um projeto a parte na solution.
 Otimizações já identificadas a serem feitas:
 
 - Alterar Dapper para EntityFramework.
-- Refatorar tratamento de exceções.
 
